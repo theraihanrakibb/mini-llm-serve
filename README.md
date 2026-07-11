@@ -36,16 +36,16 @@ backend is a ~20-line change (see [Plugging in a real backend](#plugging-in-a-re
 
 ```mermaid
 flowchart LR
-    Client([Client]) -->|POST /v1/completions| API[FastAPI App]
+    Client[Client] -->|POST completions| API[FastAPI App]
     API --> Batcher[Async Batcher]
-    Batcher -->|forward(batch)| Backend[(DummyBackend / HF Backend)]
+    Batcher -->|forward batch| Backend[Backend: Dummy or HF]
     Backend -->|Output list| Batcher
     Batcher -->|routed Output| API
     API -->|SSE token stream| Client
 
-    API -->|GET /health| Liveness[Liveness Probe]
-    API -->|GET /ready| Readiness[Readiness Probe]
-    API -->|GET /metrics| Prometheus[(Prometheus Scrape)]
+    API -->|GET health| Liveness[Liveness Probe]
+    API -->|GET ready| Readiness[Readiness Probe]
+    API -->|GET metrics| Prometheus[Prometheus Scrape]
 ```
 
 | Module | Responsibility |
