@@ -39,7 +39,7 @@ flowchart LR
     Client([Client]) -->|POST /v1/completions| API[FastAPI App]
     API --> Batcher[Async Batcher]
     Batcher -->|forward(batch)| Backend[(DummyBackend / HF Backend)]
-    Backend -->|list[Output]| Batcher
+    Backend -->|"Output list"| Batcher
     Batcher -->|routed Output| API
     API -->|SSE token stream| Client
 
